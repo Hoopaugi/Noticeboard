@@ -1,0 +1,14 @@
+{
+  "notices": [
+    {
+      "title": "Test Notice 1",
+      "content": "Test notice 1 content"
+    }, {
+      "title": "Test Notice 2",
+      "content": "Test notice 2 content"
+    }, {
+      "title": "Test Notice 3",
+      "content": "Test notice 3 content"
+    }
+  ]
+}
