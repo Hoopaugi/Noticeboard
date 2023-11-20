@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: services/backend
+    environment:
+      NODE_ENV: development
+      PORT: 5000
+    ports:
+      - 5000:5000
+    volumes:
+      - ./services/backend:/usr/src/app
+    restart: unless-stopped
