@@ -3,8 +3,13 @@ import { MongoMemoryServer } from 'mongodb-memory-server'
 
 import Notice from '../api/notice/Notice'
 import seeds from './seeds.json'
+import { Database } from './interfaces'
 
 let mongod: MongoMemoryServer
+
+export const initialDatabase: Database = {
+  notices: []
+}
 
 const connect = async () => {
   mongod = await MongoMemoryServer.create()
@@ -21,8 +26,12 @@ const disconnect = async () => {
 }
 
 const seed = async () => {
+  initialDatabase.notices = []
+
   for (const notice of seeds.notices) {
-    await Notice.create(notice)
+    const newNotice = await Notice.create(notice)
+
+    initialDatabase.notices.push(newNotice)
   }
 }
 

@@ -9,4 +9,10 @@ const create = async (notice: INotice): Promise<HydratedDocument<INotice>> => {
   return newNotice
 }
 
-export default { create }
+const findAll = async (): Promise<INotice[]> => {
+  const notices = await Notice.find({})
+
+  return notices
+}
+
+export default { create, findAll }

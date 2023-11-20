@@ -1,7 +1,7 @@
 import request from 'supertest'
 
 import app from '../../app'
-import db from '../../test/db'
+import db, { initialDatabase } from '../../test/db'
 
 beforeAll(async () => {
   await db.connect()
@@ -12,7 +12,7 @@ afterAll(async () => {
 })
 
 describe('notice.routes', () => {
-  describe('POST /api/notice', () => {
+  describe('POST /api/notice/', () => {
     beforeEach(async () => {
       await db.seed()
     })
@@ -27,7 +27,7 @@ describe('notice.routes', () => {
         'content': 'Another test notice content'
       }
 
-      const res = await request(app).post('/api/notice').send(data)
+      let res = await request(app).post('/api/notice').send(data)
   
       expect(res.statusCode).toBe(201)
 
@@ -37,6 +37,30 @@ describe('notice.routes', () => {
 
       expect(res.body._id).not.toBeDefined()
       expect(res.body.__v).not.toBeDefined()
+
+      res = await request(app).get('/api/notice/')
+  
+      expect(res.statusCode).toBe(200)
+
+      expect(res.body.length).toBe(initialDatabase.notices.length + 1)
+    })
+  })
+
+  describe('GET /api/notice/', () => {
+    beforeEach(async () => {
+      await db.seed()
+    })
+
+    afterEach(async () => {
+      await db.clear()
+    })
+
+    test('All initial notices can be fetched', async () => {
+      const res = await request(app).get('/api/notice/')
+  
+      expect(res.statusCode).toBe(200)
+
+      expect(res.body.length).toBe(initialDatabase.notices.length)
     })
   })
 })

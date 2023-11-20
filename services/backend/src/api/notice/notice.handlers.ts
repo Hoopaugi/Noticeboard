@@ -15,4 +15,10 @@ const create = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-export default { create }
+const findAll = async (req: Request, res: Response) => {
+  const notices = await noticeServices.findAll()
+
+  res.json(notices)
+}
+
+export default { create, findAll }
