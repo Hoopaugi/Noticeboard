@@ -20,8 +20,8 @@ export const errorHandler = (error: unknown, req: Request, res: Response, next: 
   }
 
   if (stack) {
-    res.status(statusCode).json({ message, stack })
+    res.status(statusCode).json({ statusCode, message, stack })
   } else {
-    res.status(statusCode).json({ message})
+    res.status(statusCode).json({ statusCode, message})
   }
 }

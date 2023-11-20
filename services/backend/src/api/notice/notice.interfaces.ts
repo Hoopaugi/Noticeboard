@@ -1,4 +1,4 @@
 export interface Notice {
-  title?: string
+  title: string
   content: string
 }

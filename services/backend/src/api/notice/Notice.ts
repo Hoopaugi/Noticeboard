@@ -3,7 +3,7 @@ import { Schema, model } from 'mongoose'
 import { Notice as INotice } from './notice.interfaces'
 
 const noticeSchema = new Schema<INotice>({
-  title: { type: String },
+  title: { type: String, required: true },
   content: { type: String, required: true }
 }, {
   toJSON: {

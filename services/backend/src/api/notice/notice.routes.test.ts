@@ -44,6 +44,34 @@ describe('notice.routes', () => {
 
       expect(res.body.length).toBe(initialDatabase.notices.length + 1)
     })
+
+    test('Notice with invalid parameters is rejected', async () => {
+      const noticeNoTitle = {
+        'content': 'Another test notice content'
+      }
+
+      let res = await request(app).post('/api/notice').send(noticeNoTitle)
+  
+      expect(res.statusCode).toBe(400)
+
+      expect(res.body.message).toBe('missing title')
+
+      const noticeNoContent = {
+        'title': 'Another Test Notice'
+      }
+
+      res = await request(app).post('/api/notice').send(noticeNoContent)
+  
+      expect(res.statusCode).toBe(400)
+
+      expect(res.body.message).toBe('missing content')
+
+      res = await (await request(app).get('/api/notice/'))
+  
+      expect(res.statusCode).toBe(200)
+
+      expect(res.body.length).toBe(initialDatabase.notices.length)
+    })
   })
 
   describe('GET /api/notice/', () => {
