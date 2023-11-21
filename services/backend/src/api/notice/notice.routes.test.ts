@@ -12,7 +12,7 @@ afterAll(async () => {
 })
 
 describe('notice.routes', () => {
-  describe('POST /api/notice/', () => {
+  describe('POST /api/notices/', () => {
     beforeEach(async () => {
       await db.seed()
     })
@@ -27,7 +27,7 @@ describe('notice.routes', () => {
         'content': 'Another test notice content'
       }
 
-      let res = await request(app).post('/api/notice').send(data)
+      let res = await request(app).post('/api/notices').send(data)
   
       expect(res.statusCode).toBe(201)
 
@@ -38,7 +38,7 @@ describe('notice.routes', () => {
       expect(res.body._id).not.toBeDefined()
       expect(res.body.__v).not.toBeDefined()
 
-      res = await request(app).get('/api/notice/')
+      res = await request(app).get('/api/notices/')
   
       expect(res.statusCode).toBe(200)
 
@@ -50,7 +50,7 @@ describe('notice.routes', () => {
         'content': 'Another test notice content'
       }
 
-      let res = await request(app).post('/api/notice').send(noticeNoTitle)
+      let res = await request(app).post('/api/notices').send(noticeNoTitle)
   
       expect(res.statusCode).toBe(400)
 
@@ -60,13 +60,13 @@ describe('notice.routes', () => {
         'title': 'Another Test Notice'
       }
 
-      res = await request(app).post('/api/notice').send(noticeNoContent)
+      res = await request(app).post('/api/notices').send(noticeNoContent)
   
       expect(res.statusCode).toBe(400)
 
       expect(res.body.message).toBe('missing content')
 
-      res = await (await request(app).get('/api/notice/'))
+      res = await (await request(app).get('/api/notices/'))
   
       expect(res.statusCode).toBe(200)
 
@@ -74,7 +74,7 @@ describe('notice.routes', () => {
     })
   })
 
-  describe('GET /api/notice/', () => {
+  describe('GET /api/notices/', () => {
     beforeEach(async () => {
       await db.seed()
     })
@@ -84,7 +84,7 @@ describe('notice.routes', () => {
     })
 
     test('All initial notices can be fetched', async () => {
-      const res = await request(app).get('/api/notice/')
+      const res = await request(app).get('/api/notices/')
   
       expect(res.statusCode).toBe(200)
 
