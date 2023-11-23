@@ -1,7 +1,10 @@
 import request from 'supertest'
 
 import app from '../../app'
-import db, { initialDatabase } from '../../test/db'
+import db from '../../test/db'
+import { Database } from '../../test/interfaces'
+
+let database: Database
 
 beforeAll(async () => {
   await db.connect()
@@ -14,7 +17,7 @@ afterAll(async () => {
 describe('notice.routes', () => {
   describe('POST /api/notices/', () => {
     beforeEach(async () => {
-      await db.seed()
+      database = await db.seed()
     })
 
     afterEach(async () => {
@@ -42,7 +45,7 @@ describe('notice.routes', () => {
   
       expect(res.statusCode).toBe(200)
 
-      expect(res.body.length).toBe(initialDatabase.notices.length + 1)
+      expect(res.body.length).toBe(database.notices.length + 1)
     })
 
     test('Notice with invalid parameters is rejected', async () => {
@@ -70,7 +73,7 @@ describe('notice.routes', () => {
   
       expect(res.statusCode).toBe(200)
 
-      expect(res.body.length).toBe(initialDatabase.notices.length)
+      expect(res.body.length).toBe(database.notices.length)
     })
   })
 
@@ -88,7 +91,7 @@ describe('notice.routes', () => {
   
       expect(res.statusCode).toBe(200)
 
-      expect(res.body.length).toBe(initialDatabase.notices.length)
+      expect(res.body.length).toBe(database.notices.length)
     })
   })
 })

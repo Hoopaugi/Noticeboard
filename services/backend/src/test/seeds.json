@@ -10,5 +10,11 @@
       "title": "Test Notice 3",
       "content": "Test notice 3 content"
     }
+  ],
+  "users": [
+    {
+      "username": "tester",
+      "password": "secret"
+    }
   ]
 }

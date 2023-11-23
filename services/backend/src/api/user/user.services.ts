@@ -9,7 +9,7 @@ const create = async (user: IUser): Promise<HydratedDocument<IUser>> => {
   return newUser
 }
 
-const findByUsername = async (username: string): Promise<IUser | null> => {
+const findByUsername = async (username: string): Promise<HydratedDocument<IUser> | null> => {
   const user = await User.findOne({ username })
 
   return user
