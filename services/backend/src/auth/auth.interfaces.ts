@@ -1,5 +1,6 @@
 import { Request } from 'express'
 import { JwtPayload } from 'jsonwebtoken'
+import { HydratedDocument } from 'mongoose'
 
 import { User } from '../api/user/user.interfaces'
 
@@ -14,5 +15,5 @@ export interface UserTokenPayload extends JwtPayload {
 }
 
 export interface RequestWithUser extends Request {
-  user?: User
+  user?: HydratedDocument<User>
 }

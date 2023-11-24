@@ -38,7 +38,9 @@ const seed = async () => {
   }
 
   for (const notice of seeds.notices) {
-    const newNotice = await Notice.create(notice)
+    const newNotice = await Notice.create({ ...notice, user: database.users[0]._id})
+
+    database.users[0].notices.push(newNotice._id)
 
     database.notices.push(newNotice)
   }

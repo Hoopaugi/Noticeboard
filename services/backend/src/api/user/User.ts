@@ -4,7 +4,8 @@ import { User as IUser } from './user.interfaces'
 
 const userSchema = new Schema<IUser>({
   username: { type: String, required: true },
-  passwordHash: { type: String, required: true }
+  passwordHash: { type: String, required: true },
+  notices: [{ type: Schema.Types.ObjectId, ref: 'Notice' }]
 }, {
   toJSON: {
     transform: function (doc, ret) {

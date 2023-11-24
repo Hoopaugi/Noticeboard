@@ -14,7 +14,8 @@ export const toNewUser = async (req: Request): Promise<IUser> => {
 
   const newUser = {
     username: parseUsername(body.username),
-    passwordHash: await parsePasswordHash(body.password)
+    passwordHash: await parsePasswordHash(body.password),
+    notices: []
   }
 
   return newUser

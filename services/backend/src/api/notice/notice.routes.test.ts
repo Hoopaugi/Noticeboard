@@ -3,8 +3,11 @@ import request from 'supertest'
 import app from '../../app'
 import db from '../../test/db'
 import { Database } from '../../test/interfaces'
+import authServices from '../../auth/auth.services'
+import seeds from '../../test/seeds.json'
 
 let database: Database
+let token: string
 
 beforeAll(async () => {
   await db.connect()
@@ -18,6 +21,8 @@ describe('notice.routes', () => {
   describe('POST /api/notices/', () => {
     beforeEach(async () => {
       database = await db.seed()
+
+      token = await authServices.login(seeds.users[0].username, seeds.users[0].password)
     })
 
     afterEach(async () => {
@@ -30,7 +35,7 @@ describe('notice.routes', () => {
         'content': 'Another test notice content'
       }
 
-      let res = await request(app).post('/api/notices').send(data)
+      let res = await request(app).post('/api/notices').send(data).set('authorization', `Bearer ${token}`)
   
       expect(res.statusCode).toBe(201)
 
@@ -53,7 +58,7 @@ describe('notice.routes', () => {
         'content': 'Another test notice content'
       }
 
-      let res = await request(app).post('/api/notices').send(noticeNoTitle)
+      let res = await request(app).post('/api/notices').send(noticeNoTitle).set('authorization', `Bearer ${token}`)
   
       expect(res.statusCode).toBe(400)
 
@@ -63,13 +68,13 @@ describe('notice.routes', () => {
         'title': 'Another Test Notice'
       }
 
-      res = await request(app).post('/api/notices').send(noticeNoContent)
+      res = await request(app).post('/api/notices').send(noticeNoContent).set('authorization', `Bearer ${token}`)
   
       expect(res.statusCode).toBe(400)
 
       expect(res.body.message).toBe('missing content')
 
-      res = await (await request(app).get('/api/notices/'))
+      res = await request(app).get('/api/notices/')
   
       expect(res.statusCode).toBe(200)
 

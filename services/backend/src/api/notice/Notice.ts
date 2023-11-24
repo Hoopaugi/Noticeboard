@@ -4,7 +4,8 @@ import { Notice as INotice } from './notice.interfaces'
 
 const noticeSchema = new Schema<INotice>({
   title: { type: String, required: true },
-  content: { type: String, required: true }
+  content: { type: String, required: true },
+  user: { type: Schema.Types.ObjectId, ref: 'User' }
 }, {
   toJSON: {
     transform: function (doc, ret) {
